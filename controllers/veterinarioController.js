@@ -76,8 +76,16 @@ const autenticar = async (req, res) => {
 
     // Revisar el password
     if (await usuario.comprobarPassword(password)) {
-        // Autenticar
-        res.json({ token: generarJWT(usuario.id) })
+        // Autenticar 
+        res.json({
+            _id: usuario._id,
+            nombre: usuario.nombre, 
+            email: usuario.email,
+            token: generarJWT(usuario.id),
+            web: usuario.web,
+            telefono: usuario.telefono
+        })
+
     } else {
         const error = new Error('El nombre de usuario y la contraseña no coinciden')
         return res.status(403).json({ msg: error.message });
